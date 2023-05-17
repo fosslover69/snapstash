@@ -1,6 +1,25 @@
-import { printLine } from './modules/print';
+let active = false;
+document.addEventListener('keydown', function (event) {
+  if (event.ctrlKey && event.key === ';') {
+    active = !active;
+    if (active) {
+      document.addEventListener('keydown', function (event) {
+        if (event.ctrlKey && event.key === 'y') {
+          handleSelection();
+        }
+      });
+    }
+  }
+});
 
-console.log('Content script works!');
-console.log('Must reload extension for modifications to take effect.');
-
-printLine("Using the 'printLine' function from the Print Module");
+function handleSelection() {
+  const text = window.getSelection().toString();
+  const url = window.location.href;
+  let date = new Date();
+  chrome.runtime.sendMessage({
+    type: 'saveText',
+    text: text,
+    url: url,
+    date: date,
+  });
+}
