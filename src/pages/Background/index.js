@@ -17,8 +17,20 @@ function saveText(text, url, date) {
   });
 }
 
+function sendNotification(title, message) {
+  const options = {
+    type: 'basic',
+    title: title,
+    message: message,
+    iconUrl: './icon-128.png',
+  };
+  chrome.notifications.create(options);
+}
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.type === 'saveText') {
     saveText(request.text, request.url, request.date);
+  } else if (request.type === 'notification') {
+    sendNotification(request.title, request.message);
   }
 });
