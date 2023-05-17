@@ -4,28 +4,7 @@ import { useState, useEffect } from 'react';
 
 const Popup = () => {
   const [filter, setFilter] = useState('');
-  const stashes = [
-    {
-      id: 1,
-      content:
-        'The greatest glory in living lies not in never falling, but in rising every time we fall.',
-      site: 'google.com',
-      date: new Date(),
-    },
-    {
-      id: 2,
-      content: 'The way to get started is to quit talking and begin doing.',
-      site: 'yetanothersite.com',
-      date: new Date(),
-    },
-    {
-      id: 3,
-      content:
-        'If life were predictable it would cease to be life, and be without flavor.',
-      site: 'yetanothersite.com',
-      date: new Date(),
-    },
-  ];
+  const [stashes, setStashes] = useState([]);
   function filterStash() {
     getCurrentTab().then((tab) => {
       let tabValue = tab.url;
@@ -49,6 +28,11 @@ const Popup = () => {
   const filteredStashes = stashes.filter((stash) => {
     return stash.site.toLowerCase().includes(filter.toLowerCase());
   });
+  useEffect(() => {
+    chrome.storage.local.get(['selectedArray'], function (result) {
+      result.selectedArray ? setStashes(result.selectedArray) : setStashes([]);
+    });
+  }, []);
   return (
     <div className="App">
       <header className="App-header">
@@ -71,15 +55,17 @@ const Popup = () => {
         {filteredStashes.length === 0 && (
           <div className="stash-card">No stashes yet!</div>
         )}
-        {filteredStashes.map((stash) => (
-          <div key={stash.id} className="stash-card">
-            <p>{stash.content}</p>
-            <div className="stash-details">
-              <p>{stash.site}</p>
-              <p>{stash.date.toLocaleDateString('in')}</p>
+        <div className="stash-items">
+          {filteredStashes.map((stash) => (
+            <div key={stash.id} className="stash-card">
+              <p>{stash.content}</p>
+              <div className="stash-details">
+                <p>{stash.site}</p>
+                <p>{stash.date}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
