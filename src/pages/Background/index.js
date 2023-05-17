@@ -34,3 +34,21 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     sendNotification(request.title, request.message);
   }
 });
+
+chrome.runtime.onInstalled.addListener(function () {
+  chrome.contextMenus.create({
+    id: 'saveSnap',
+    title: 'Save to Snaps',
+    contexts: ['selection'],
+  });
+});
+
+chrome.contextMenus.onClicked.addListener(function (info, tab) {
+  if (info.menuItemId === 'saveSnap') {
+    const text = info.selectionText;
+    const url = info.pageUrl;
+    let date = new Date();
+    saveText(text, url, date);
+    sendNotification('Content Saved', 'Selected text saved successfully');
+  }
+});
