@@ -30,6 +30,7 @@ function handleSelection() {
   const text = window.getSelection().toString();
   const url = window.location.href;
   let date = new Date();
+  date = date.toLocaleDateString('in');
   chrome.runtime.sendMessage({
     type: 'saveText',
     text: text,

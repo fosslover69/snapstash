@@ -2,7 +2,6 @@ function saveText(text, url, date) {
   let urlName = url.match(
     /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/
   )[1];
-  date = date.toLocaleDateString('in');
   chrome.storage.local.get(['selectedArray'], function (result) {
     let storedArray = result.selectedArray || [];
     const selectObject = {
@@ -48,6 +47,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
     const text = info.selectionText;
     const url = info.pageUrl;
     let date = new Date();
+    date = date.toLocaleDateString('in');
     saveText(text, url, date);
     sendNotification('Content Saved', 'Selected text saved successfully');
   }
