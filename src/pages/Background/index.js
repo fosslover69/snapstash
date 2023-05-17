@@ -14,6 +14,7 @@ function saveText(text, url, date) {
     storedArray.push(selectObject);
     chrome.storage.local.set({ selectedArray: storedArray });
   });
+  sendNotification('Content Saved', 'Selected text saved successfully');
 }
 
 function sendNotification(title, message) {
@@ -49,6 +50,5 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
     let date = new Date();
     date = date.toLocaleDateString('in');
     saveText(text, url, date);
-    sendNotification('Content Saved', 'Selected text saved successfully');
   }
 });

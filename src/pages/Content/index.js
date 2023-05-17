@@ -15,11 +15,6 @@ document.addEventListener('keydown', function (event) {
       document.addEventListener('keydown', function (event) {
         if (event.ctrlKey && event.key === 'y') {
           handleSelection();
-          chrome.runtime.sendMessage({
-            type: 'notification',
-            title: 'Content Saved',
-            message: 'Selected text saved successfully',
-          });
         }
       });
     }
