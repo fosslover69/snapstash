@@ -8,14 +8,14 @@
   padding: 0 2rem;
   border-radius: 1rem;
 }
-.stash{
+.stash {
   display: flex;
   flex-direction: column;
   height: 100%;
   gap: 0.5rem;
 }
 
-.stash-items{
+.stash-items {
   display: flex;
   flex-direction: column;
   width: fit-content;
@@ -26,18 +26,18 @@
   margin-bottom: 2rem;
 }
 
-.stash-header{
+.stash-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-.stash-header-active-button{
-  background-color: #479BF0 !important;
+.stash-header-active-button {
+  background-color: #479bf0 !important;
 }
 
-.stash-header-button{
+.stash-header-button {
   background-color: #202428;
   border: none;
   border-radius: 0.5rem;
@@ -46,15 +46,16 @@
   cursor: pointer;
 }
 
-.stash-card{
+.stash-card {
   margin: 0 2rem;
   background-color: #202428;
   border-radius: 0.5rem;
   padding: 1rem;
   font-size: 1rem;
+  position: relative;
 }
 
-.stash-details{
+.stash-details {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -62,6 +63,13 @@
   font-size: 0.7rem;
 }
 
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 25px;
+  cursor: pointer;
+}
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -70,6 +78,6 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #479BF0;
+  background-color: #479bf0;
   border-radius: 10px;
 }
