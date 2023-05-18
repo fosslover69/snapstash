@@ -7,11 +7,16 @@ interface Props {
 
 const Options: React.FC<Props> = ({ title }: Props) => {
   const [apiKey, setApiKey] = useState<string | null>(null);
+  const [orgKey, setOrgKey] = useState<string | null>(null);
   const [input, setInput] = useState('');
+  const [orgInput, setOrgInput] = useState('');
 
   useEffect(() => {
     chrome.storage.local.get(['apiKey'], (result) => {
       setApiKey(result.apiKey);
+    });
+    chrome.storage.local.get(['orgKey'], (result) => {
+      setOrgKey(result.orgKey);
     });
   }, []);
 
@@ -27,6 +32,18 @@ const Options: React.FC<Props> = ({ title }: Props) => {
     });
   }
 
+  function saveOrgKey() {
+    setOrgKey(orgInput);
+    chrome.storage.local.set({ orgKey: orgInput }, () => {
+      chrome.runtime.sendMessage({
+        type: 'notification',
+        title: 'Organization Key Saved',
+        message: 'Your Organization Key has been saved.',
+      });
+      console.log('Value is set to ' + orgInput);
+    });
+  }
+
   function removeApiKey() {
     chrome.storage.local.set({ apiKey: null }, () => {
       setApiKey(null);
@@ -38,6 +55,17 @@ const Options: React.FC<Props> = ({ title }: Props) => {
     });
   }
 
+  function removeOrgKey() {
+    chrome.storage.local.set({ orgKey: null }, () => {
+      setOrgKey(null);
+      chrome.runtime.sendMessage({
+        type: 'notification',
+        title: 'Organization Key Removed',
+        message: 'Your Organization Key has been removed.',
+      });
+    });
+  }
+
   return (
     <div className="options">
       <h1 className="options-title">{title}</h1>
@@ -45,7 +73,7 @@ const Options: React.FC<Props> = ({ title }: Props) => {
         <div>
           <h1>Options:</h1>
           <div className="options-field">
-            OpenAI API Key
+            <p>OpenAI API Key</p>
             {apiKey !== null ? (
               <div className="options-field">
                 <input
@@ -66,6 +94,31 @@ const Options: React.FC<Props> = ({ title }: Props) => {
                   onChange={(e) => setInput(e.target.value)}
                 />
                 <button onClick={saveApiKey}>Save</button>
+              </div>
+            )}
+          </div>
+          <div className="options-field">
+            <p>OpenAI Org Key</p>
+            {orgKey !== null ? (
+              <div className="options-field">
+                <input
+                  type="text"
+                  value={orgKey}
+                  className="options-field-api"
+                  disabled
+                />
+                <button onClick={removeOrgKey}>Remove</button>
+              </div>
+            ) : (
+              <div className="options-field">
+                <input
+                  type="text"
+                  value={orgInput}
+                  className="options-field-api"
+                  placeholder="Enter your Org Key"
+                  onChange={(e) => setOrgInput(e.target.value)}
+                />
+                <button onClick={saveOrgKey}>Save</button>
               </div>
             )}
           </div>
