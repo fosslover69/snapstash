@@ -29,6 +29,7 @@ const Popup = () => {
 
   // Call GPT API
   const enhanceWithAI = async (text) => {
+    setEnhancedText('Loading...');
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
       prompt: text,
