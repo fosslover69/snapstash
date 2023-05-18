@@ -13,10 +13,11 @@ const Popup = () => {
   const [userInput, setUserInput] = useState('');
   const [enhancedText, setEnhancedText] = useState('');
   const [apiKey, setApiKey] = useState('');
+  const [orgKey, setOrgKey] = useState('');
 
   // GPT API
   const configuration = new Configuration({
-    organization: 'org-npYkIeyGCgTptmNRGSpAuqTb',
+    organization: orgKey,
     apiKey: apiKey,
   });
   const openai = new OpenAIApi(configuration);
@@ -87,6 +88,9 @@ const Popup = () => {
     chrome.storage.local.get(['apiKey'], function (result) {
       result.apiKey ? setApiKey(result.apiKey) : setApiKey('');
     });
+    chrome.storage.local.get(['orgKey'], function (result) {
+      result.orgKey ? setOrgKey(result.orgKey) : setOrgKey('');
+    });
     chrome.storage.local.get(['selectedArray'], function (result) {
       result.selectedArray ? setStashes(result.selectedArray) : setStashes([]);
     });
@@ -97,7 +101,7 @@ const Popup = () => {
       {/* GPT Overlay */}
       {gptText !== '' ? (
         <div className="gpt-overlay">
-          {apiKey ? (
+          {apiKey && orgKey ? (
             <div className="gpt-overlay-content">
               <h2>Ask the Genie</h2>
               <p className="clamped-text">Your Selected Text: {gptText}</p>
@@ -144,8 +148,8 @@ const Popup = () => {
           ) : (
             <div className="gpt-overlay-content">
               <p>
-                Head over to Options page, Enter your API key and reload the
-                Extension to continue
+                Head over to Options page, Enter your API and Org keys and
+                reload the Extension to continue
               </p>
             </div>
           )}
