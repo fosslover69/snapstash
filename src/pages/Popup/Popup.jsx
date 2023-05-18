@@ -1,14 +1,7 @@
 import React from 'react';
 import './Popup.css';
 import { useState, useEffect } from 'react';
-
-// OpenAI configuration
-const { Configuration, OpenAIApi } = require('openai');
-const configuration = new Configuration({
-  organization: 'org-npYkIeyGCgTptmNRGSpAuqTb',
-  apiKey: 'your-api-key-here',
-});
-const openai = new OpenAIApi(configuration);
+import { Configuration, OpenAIApi } from 'openai';
 
 const Popup = () => {
   // Stash States
@@ -19,6 +12,14 @@ const Popup = () => {
   const [gptText, setGptText] = useState('');
   const [userInput, setUserInput] = useState('');
   const [enhancedText, setEnhancedText] = useState('');
+  const [apiKey, setApiKey] = useState('');
+
+  // GPT API
+  const configuration = new Configuration({
+    organization: 'org-npYkIeyGCgTptmNRGSpAuqTb',
+    apiKey: apiKey,
+  });
+  const openai = new OpenAIApi(configuration);
 
   // GPT Functions
   // Handle user input
@@ -82,6 +83,9 @@ const Popup = () => {
 
   // Get stashes from local storage
   useEffect(() => {
+    chrome.storage.local.get(['apiKey'], function (result) {
+      result.apiKey ? setApiKey(result.apiKey) : setApiKey('');
+    });
     chrome.storage.local.get(['selectedArray'], function (result) {
       result.selectedArray ? setStashes(result.selectedArray) : setStashes([]);
     });
@@ -92,49 +96,58 @@ const Popup = () => {
       {/* GPT Overlay */}
       {gptText !== '' ? (
         <div className="gpt-overlay">
-          <div className="gpt-overlay-content">
-            <h2>Ask the Genie</h2>
-            <p className="clamped-text">Your Selected Text: {gptText}</p>
-            <div className="gpt-overlay-content-userinput">
-              <input
-                type="text"
-                value={userInput}
-                placeholder="Ask a question"
-                onChange={handleChange}
-              />
-              <div>
-                <button
-                  className="gpt-overlay-button"
-                  onClick={() => enhanceWithAI(userInput + ' ' + gptText)}
-                >
-                  Ask
-                </button>
+          {apiKey ? (
+            <div className="gpt-overlay-content">
+              <h2>Ask the Genie</h2>
+              <p className="clamped-text">Your Selected Text: {gptText}</p>
+              <div className="gpt-overlay-content-userinput">
+                <input
+                  type="text"
+                  value={userInput}
+                  placeholder="Ask a question"
+                  onChange={handleChange}
+                />
+                <div>
+                  <button
+                    className="gpt-overlay-button"
+                    onClick={() => enhanceWithAI(userInput + ' ' + gptText)}
+                  >
+                    Ask
+                  </button>
+                </div>
               </div>
+              {enhancedText && (
+                <div className="gpt-overlay-output">
+                  Output from GPT: <br />
+                  {enhancedText}
+                </div>
+              )}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="close-button"
+                onClick={() => {
+                  closeOverlay();
+                }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
             </div>
-            {enhancedText && (
-              <div className="gpt-overlay-output">
-                Output from GPT: <br />
-                {enhancedText}
-              </div>
-            )}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="close-button"
-              onClick={() => {
-                closeOverlay();
-              }}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </div>
+          ) : (
+            <div className="gpt-overlay-content">
+              <p>
+                Head over to Options page, Enter your API key and reload the
+                Extension to continue
+              </p>
+            </div>
+          )}
         </div>
       ) : null}
 
