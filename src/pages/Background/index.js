@@ -1,3 +1,4 @@
+// Save Text to Local Storage
 function saveText(text, url, date) {
   let urlName = url.match(
     /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/
@@ -17,6 +18,7 @@ function saveText(text, url, date) {
   sendNotification('Content Saved', 'Selected text saved successfully');
 }
 
+// Send Notification
 function sendNotification(title, message) {
   const options = {
     type: 'basic',
@@ -27,6 +29,7 @@ function sendNotification(title, message) {
   chrome.notifications.create(options);
 }
 
+// Listen for function calls from content script
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.type === 'saveText') {
     saveText(request.text, request.url, request.date);
@@ -35,6 +38,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 });
 
+// Right click context menu
 chrome.runtime.onInstalled.addListener(function () {
   chrome.contextMenus.create({
     id: 'saveSnap',
