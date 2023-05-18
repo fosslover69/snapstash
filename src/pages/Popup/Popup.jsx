@@ -176,7 +176,14 @@ const Popup = () => {
         <div className="stash-items">
           {filteredStashes.map((stash) => (
             <div key={stash.id} className="stash-card">
-              <p className="clamped-text">{stash.content}</p>
+              <a
+                href={stash.url}
+                className="stash-url"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <p className="clamped-text">{stash.content}</p>
+              </a>
               <div className="stash-details">
                 <p>{stash.site}</p>
                 <button

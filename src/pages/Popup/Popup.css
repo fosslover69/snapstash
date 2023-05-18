@@ -16,6 +16,10 @@
   gap: 0.5rem;
 }
 
+.stash-url {
+  text-decoration: none;
+  color: #fff;
+}
 .stash-items {
   display: flex;
   flex-direction: column;
