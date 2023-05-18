@@ -181,6 +181,7 @@ const Popup = () => {
                 <p>{stash.site}</p>
                 <button
                   className="stash-header-button stash-header-active-button"
+                  style={{ fontSize: '0.7rem' }}
                   onClick={() => setGptText(stash.content)}
                 >
                   Enhance
