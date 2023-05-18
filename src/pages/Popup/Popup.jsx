@@ -11,16 +11,22 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const Popup = () => {
+  // Stash States
   const [filter, setFilter] = useState('');
   const [stashes, setStashes] = useState([]);
+
+  // GPT States
   const [gptText, setGptText] = useState('');
   const [userInput, setUserInput] = useState('');
   const [enhancedText, setEnhancedText] = useState('');
 
+  // GPT Functions
+  // Handle user input
   const handleChange = (event) => {
     setUserInput(event.target.value);
   };
 
+  // Call GPT API
   const enhanceWithAI = async (text) => {
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
@@ -31,12 +37,15 @@ const Popup = () => {
     setEnhancedText(response.data.choices[0].text);
   };
 
+  // Close GPT Overlay
   function closeOverlay() {
     setGptText('');
     setUserInput('');
     setEnhancedText('');
   }
 
+  // Stash Functions
+  // Filter stashes by current site
   function filterStash() {
     getCurrentTab().then((tab) => {
       let tabValue = tab.url;
@@ -49,6 +58,11 @@ const Popup = () => {
     });
   }
 
+  const filteredStashes = stashes.filter((stash) => {
+    return stash.site.toLowerCase().includes(filter.toLowerCase());
+  });
+
+  // Remove stash from local storage
   function removeStash(id) {
     const newStashes = stashes.filter((stash) => stash.id !== id);
     chrome.storage.local.set({ selectedArray: newStashes }, function () {
@@ -56,6 +70,7 @@ const Popup = () => {
     });
   }
 
+  // Get current tab
   async function getCurrentTab() {
     let queryOptions = {
       active: true,
@@ -65,10 +80,7 @@ const Popup = () => {
     return tab;
   }
 
-  const filteredStashes = stashes.filter((stash) => {
-    return stash.site.toLowerCase().includes(filter.toLowerCase());
-  });
-
+  // Get stashes from local storage
   useEffect(() => {
     chrome.storage.local.get(['selectedArray'], function (result) {
       result.selectedArray ? setStashes(result.selectedArray) : setStashes([]);
