@@ -1,5 +1,9 @@
+// Define extension status
 let active = false;
+
+// Listen for keyboard shortcuts
 document.addEventListener('keydown', function (event) {
+  // Extension activation shortcut
   if (event.ctrlKey && event.key === ';') {
     active = !active;
     title = active ? 'Extension Activated' : 'Extension Deactivated';
@@ -12,7 +16,9 @@ document.addEventListener('keydown', function (event) {
       message: message,
     });
     if (active) {
+      // Listen for text selection
       document.addEventListener('keydown', function (event) {
+        // Save text shortcut
         if (event.ctrlKey && event.key === 'y') {
           handleSelection();
         }
@@ -21,6 +27,7 @@ document.addEventListener('keydown', function (event) {
   }
 });
 
+// Save selected text
 function handleSelection() {
   const text = window.getSelection().toString();
   const url = window.location.href;
