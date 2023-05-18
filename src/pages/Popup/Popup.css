@@ -8,6 +8,7 @@
   padding: 0 2rem;
   border-radius: 1rem;
 }
+
 .stash {
   display: flex;
   flex-direction: column;
@@ -62,6 +63,7 @@
   justify-content: space-between;
   align-items: center;
   font-size: 0.7rem;
+  margin-top: 1rem;
 }
 
 .close-button {
@@ -70,6 +72,81 @@
   right: 10px;
   width: 25px;
   cursor: pointer;
+}
+
+.clamped-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 1rem;
+}
+
+.gpt-overlay {
+  position: fixed;
+  left: 0px;
+  z-index: 10;
+  width: 700px;
+  height: 600px;
+  background-color: #292d30;
+}
+
+.gpt-overlay-content {
+  border-radius: 0.5rem;
+  padding: 1rem 4rem;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.gpt-overlay-content h2,
+p {
+  margin: 0;
+}
+
+.gpt-overlay-content input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #202428;
+  color: #fff;
+}
+
+.gpt-overlay-content input:focus {
+  outline: none;
+}
+
+.gpt-overlay-content-userinput {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.gpt-overlay-button {
+  background-color: #479bf0;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.gpt-overlay-output {
+  background-color: #202428;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  font-size: 1rem;
+  width: 60%;
+  height: 300px;
+  overflow-y: scroll;
+  white-space: pre-wrap;
 }
 
 ::-webkit-scrollbar {
