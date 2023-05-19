@@ -9,6 +9,19 @@
   border-radius: 1rem;
 }
 
+.App-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  background-color: #202428;
+  width: fit-content;
+}
+
 .stash {
   display: flex;
   flex-direction: column;
@@ -20,6 +33,7 @@
   text-decoration: none;
   color: #fff;
 }
+
 .stash-items {
   display: flex;
   flex-direction: column;
@@ -50,6 +64,14 @@
   padding: 0.5rem;
   color: #fff;
   cursor: pointer;
+}
+
+.stash-enhance-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .stash-card {
