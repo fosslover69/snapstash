@@ -8,15 +8,15 @@ SnapStash is a powerful Chrome extension that allows you to capture, store, and 
 
 ## Features
 
-- Capture and Save: Easily capture and save the content of selected contents from the active webpage.
+- **Capture and Save**: Easily capture and save the content of selected contents from the active webpage.
 
-- Storage: Store all captured elements' text in local storage for easy access.
+- **Storage**: Store all captured elements' text in local storage for easy access.
 
-- Display and Metadata: Display captured text for confirmation and show relevant metadata like timestamp and source URL.
+- **Display**: Display captured text for confirmation and show relevant metadata like timestamp and source URL.
 
-- Creative Generation: Generate creative outputs using the captured text and GPT3 API integration.
+- **Creative Generation**: Generate creative outputs using the captured text and GPT3 API integration.
 
-- Local Storage Persistence: Store saved captures and generated results in local storage for continued accessibility.
+- **Local Storage Persistence**: Store saved captures and generated results in local storage for continued accessibility.
 
 ## Installation
 
