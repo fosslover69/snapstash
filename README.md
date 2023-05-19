@@ -50,6 +50,9 @@ SnapStash is a powerful Chrome extension that allows you to capture, store, and 
 
 - Please note that you need to obtain the necessary keys from the GPT3 API provider and enter them in the SnapStash options page for the creative generation feature to work.
 
+## Demo
+https://github.com/fosslover69/snapstash/assets/67329471/9d33d469-644f-486b-927a-b7632f1c5381
+
 Note: The SnapStash extension requires access to your browser tabs and storage to provide the capturing, storage, and creative generation features.
 
 This project is made from this [boilerplate](https://github.com/lxieyang/chrome-extension-boilerplate-react)
